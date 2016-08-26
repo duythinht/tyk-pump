@@ -87,6 +87,10 @@ func (p *GraylogPump) WriteData(data []interface{}) error {
 
 		rResp, err := base64.StdEncoding.DecodeString(record.RawResponse)
 
+		if len(rResp) > 8192 {
+			rResp = rResp[:8192] + "..."
+		}
+
 		if err != nil {
 			log.WithFields(logrus.Fields{
 				"prefix": graylogPrefix,
