@@ -87,7 +87,7 @@ func (p *GraylogPump) WriteData(data []interface{}) error {
 
 		rResp, err := base64.StdEncoding.DecodeString(record.RawResponse)
 
-		sResp = string(rResp)
+		sResp := string(rResp)
 
 		if len(sResp) > 8192 {
 			sResp = sResp[:8192]
