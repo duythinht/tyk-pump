@@ -87,8 +87,10 @@ func (p *GraylogPump) WriteData(data []interface{}) error {
 
 		rResp, err := base64.StdEncoding.DecodeString(record.RawResponse)
 
-		if len(rResp) > 8192 {
-			rResp = rResp[:8192] + "..."
+		sResp = string(rResp)
+
+		if len(sResp) > 8192 {
+			sResp = sResp[:8192]
 		}
 
 		if err != nil {
@@ -109,7 +111,7 @@ func (p *GraylogPump) WriteData(data []interface{}) error {
 			"oauth_id":      record.OauthID,
 			"raw_request":   string(rReq),
 			"request_time":  record.RequestTime,
-			"raw_response":  string(rResp),
+			"raw_response":  sResp,
 		}
 
 		messageMap := map[string]interface{}{}
